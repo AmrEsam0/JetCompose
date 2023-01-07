@@ -12,10 +12,12 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyHorizontalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.filled.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -41,8 +43,14 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun MyApp(modifier: Modifier = Modifier) {
-	Surface(modifier.fillMaxSize(), color = Color(0xFFC4C4C4)) {
-		HomeScreen()
+	Scaffold(
+		bottomBar = { MyButtonNavigation()},
+		modifier = modifier.fillMaxSize(),
+		backgroundColor = Color(0xFFF0EAE2)
+	// padding here is to move screen content away from the bottomNavBar
+	// when needed like in rotated mode (specially for smaller screens)
+	) { padding ->
+			HomeScreen(Modifier.padding(padding))
 	}
 }
 
@@ -71,7 +79,8 @@ fun HomeSection(
 fun HomeScreen(
 	modifier: Modifier = Modifier,
 ) {
-	Column(modifier.padding(vertical = 16.dp)) {
+	Column(modifier.verticalScroll(rememberScrollState())) {
+		Spacer(Modifier.height(16.dp))
 		SearchBar(Modifier.padding(horizontal = 16.dp))
 		HomeSection(title = R.string.align_your_body, content = {
 			AlignYourBodyRow()
@@ -79,9 +88,42 @@ fun HomeScreen(
 		HomeSection(title = R.string.favorite_collections, content = {
 			FavoriteCollectionGrid()
 		})
+		Spacer(Modifier.height(16.dp))
 	}
 }
 
+@Composable
+fun MyButtonNavigation(
+	modifier: Modifier = Modifier,
+) {
+	BottomNavigation(
+		backgroundColor = Color(0xFFECE9E6),
+		modifier = modifier
+	) {
+
+		BottomNavigationItem(
+			selected = true, onClick = { /*TODO*/ },
+			icon = {
+				Icon(Icons.Default.Home, contentDescription = null)
+			},
+			label = { Text(text = "Home") }
+		)
+		BottomNavigationItem(
+			selected = false, onClick = { /*TODO*/ },
+			icon = {
+				Icon(Icons.Default.Person, contentDescription = null)
+			},
+			label = { Text(text = "Profile") }
+		)
+		BottomNavigationItem(
+			selected = false, onClick = { /*TODO*/ },
+			icon = {
+				Icon(Icons.Default.Settings, contentDescription = null)
+			},
+			label = { Text(text = "Settings") }
+		)
+	}
+}
 
 
 @Composable
