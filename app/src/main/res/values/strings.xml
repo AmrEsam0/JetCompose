@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Tasky2</string>
+    <string name="ab1_inversions">Inversions</string>
+    <string name="fc2_nature_meditations">Nature Meditation</string>
 </resources>
