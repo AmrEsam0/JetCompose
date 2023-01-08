@@ -1,2 +1,2 @@
 # JetCompose
-Learning Jetpack Compose
+Compose UI and Layout
