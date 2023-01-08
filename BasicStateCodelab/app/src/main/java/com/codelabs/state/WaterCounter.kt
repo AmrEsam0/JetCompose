@@ -16,6 +16,7 @@
 package com.codelabs.state
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Button
 import androidx.compose.material.Text
@@ -33,22 +34,37 @@ fun StatefulCounter(modifier: Modifier = Modifier) {
     StatelessCounter(
         count = count,
         onIncrement = { count++ },
+        onDec = { count-- },
         modifier = modifier
     )
 }
 
 @Composable
-fun StatelessCounter(count: Int, onIncrement: () -> Unit, modifier: Modifier = Modifier) {
+fun StatelessCounter(
+    count: Int,
+    onIncrement: () -> Unit,
+    onDec: () -> Unit,
+    modifier: Modifier = Modifier
+) {
     Column(modifier = modifier.padding(16.dp)) {
         if (count > 0) {
             Text("You've had $count glasses.")
         }
-        Button(
-            onClick = onIncrement,
-            enabled = count < 10,
-            modifier = Modifier.padding(top = 8.dp)
-        ) {
-            Text("Add one")
+        Row(modifier){
+            Button(
+                onClick = onDec,
+                enabled = count > 0,
+                modifier = Modifier.padding(top = 8.dp, end = 10.dp)
+            ) {
+                Text("Sub one")
+            }
+            Button(
+                onClick = onIncrement,
+                enabled = count < 10,
+                modifier = Modifier.padding(top = 8.dp)
+            ) {
+                Text("Add one")
+            }
         }
     }
 }
